@@ -1,0 +1,34 @@
+TerminalScreen {
+    align: center middle;
+    background: black 50%;
+}
+
+TerminalForm {
+    width: 90%;
+    height: 90%;
+}
+
+Log {
+    background: black;
+    color: lime;
+    border: round white;      
+    min-height: 20;
+    min-width: 80; 
+}
+
+# LabeledInput Input{
+#     outline: solid green;
+# }
+
+TerminalButtons {
+    align: center middle;
+    max-height: 4;
+    background: lightgray;
+    border-top: double;    
+}
+
+TerminalButtons Button {
+    max-width: 20;
+    outline: solid yellowgreen;
+    margin: 0 1 0 1;
+}
