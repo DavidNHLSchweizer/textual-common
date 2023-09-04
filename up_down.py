@@ -1,13 +1,30 @@
-import logging
-from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, Static,  Button, Input
 from textual.validation import Number
 from textual.containers import ScrollableContainer
 
-class UpdownButton(Button): pass
-class UpdownInput(Input): pass
 class UpdownWidget(Static):
+    DEFAULT_CSS = """
+        UpdownWidget {
+            width: 9;
+            margin: 1;
+            content-align: right middle;
+        }
+        Updown Input {
+            width: 8;
+            padding: 0 1;
+            margin-left: 0;
+            height: 1;
+            text-align: center; /* doesnt work */
+        }
+        Updown Button {
+            width: 7;
+            min-width: 7;
+            height: 1;
+            border: none;
+        }    
+
+"""
     def __init__(self, **kwdargs):
         self._disabled = False
         self._visible = False
@@ -15,9 +32,9 @@ class UpdownWidget(Static):
     def _get_name(self, what: str)->str:
         return f'{self.name}-{what}-'
     def compose(self) -> ComposeResult:
-        yield UpdownButton("+", id = 'plus', name=self._get_name('PLUS'), variant = 'default')
-        yield UpdownInput(id='input', name=self._get_name('INPUT'), validators=Number(minimum=1, maximum=999  ))
-        yield UpdownButton("-", id = 'minus', name=self._get_name('MINUS'),variant = 'default')
+        yield Button("+", id = 'plus', name=self._get_name('PLUS'), variant = 'default')
+        yield Input(id='input', name=self._get_name('INPUT'), validators=Number(minimum=1, maximum=999  ))
+        yield Button("-", id = 'minus', name=self._get_name('MINUS'),variant = 'default')
     @property
     def disabled(self)->bool:
         return self._disabled
@@ -53,7 +70,7 @@ class UpdownWidget(Static):
         self.__enable_buttons(self.input_value)
     def __enable_buttons(self, value):
         try:
-            minus =  self.query_one("#minus", UpdownButton)
+            minus =  self.query_one("#minus", Button)
         except:
             return
         if not minus or value is None:
@@ -78,8 +95,6 @@ class UpdownWidget(Static):
 
 if __name__ == "__main__":
     class TestApp(App):
-        CSS_PATH = "pizza_panel.css"
-
         BINDINGS = [("d", "toggle_dark", "Toggle dark mode")]
         
         def compose(self) -> ComposeResult:
