@@ -5,26 +5,13 @@ from typing import Iterable
 from textual.app import App, ComposeResult
 
 from textual.message_pump import MessagePump
-from textual.containers import Grid, Horizontal, Vertical, Center
-from textual.screen import ModalScreen, Screen
-from textual.widget import Widget
+from textual.containers import Center
+from textual.screen import ModalScreen
 from textual.widgets import Button, Label, Static
 
 from textual.message import Message
 
 from button_bar import ButtonBar, ButtonDef
-
-
-# class VerifyResult(Enum):
-#     YES = 1
-#     NO = 2
-#     CANCEL = 3
-#     ALL =  4
-#     def as_bool(self):
-#         return self in [VerifyResult.YES, VerifyResult.ALL]
-#     @staticmethod
-#     def from_bool(value: bool)->VerifyResult:
-#         return VerifyResult.YES if value else VerifyResult.NO
             
 class DialogMessage(Message):
     def __init__(self, result_str: str, originator_key: str):
@@ -32,16 +19,10 @@ class DialogMessage(Message):
         self.originator_key = originator_key
         super().__init__()
 
-# class VerifyMessage(Message):
-#     def __init__(self, result: VerifyResult, originator_key: str):
-#         self.result = result
-#         self.originator_key = originator_key
-
 class DialogForm(Static):
     DEFAULT_CSS = """   
         DialogForm {
             align: center middle;
-            # width: 80;
             height: 11;
             border: thick $surface 50%;
             background: rgb(224,33,138);
@@ -106,16 +87,6 @@ def message(originator: MessagePump, message: str, originator_key='message'):
 def verify(originator: MessagePump, question: str, originator_key='verify')->str:
     return run_dialog(originator, DialogScreen(question, [ButtonDef('Ja', variant='success'), ButtonDef('Nee', variant='error')], originator_key=originator_key))
 
-# class VerifyYesNoScreen(DialogScreen):
-#     def __init__(self, question: str, yes_button: str, no_button: str): #, id = 'YesNo'):
-#         logging.debug(f'in here:')
-#         butlist = [yes_button, no_button]
-#         super().__init__(!question, butlist) #, id=id)
-#         logging.debug(f'out here:')
-#     def compose(self) -> ComposeResult:
-#         logging.debug('yielding 123...')
-#         yield from super()
-    
 if __name__ == "__main__":
     from textual.widgets import Header, Footer
     logging.basicConfig(filename='verify.log', filemode='w', format='%(module)s-%(funcName)s-%(lineno)d: %(message)s', level=logging.DEBUG)
