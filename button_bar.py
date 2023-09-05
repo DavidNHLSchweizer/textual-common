@@ -52,7 +52,7 @@ if __name__== '__main__':
         ButtonBar.horizontal {
             outline: round purple;
             background: lightgray;
-            width: 100;
+            min-width: 100;
             height: 5;
         }
         ButtonBar.vertical {
